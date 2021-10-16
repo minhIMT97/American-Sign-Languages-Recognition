@@ -133,8 +133,8 @@ def getGestureImg(cnt,img,th1,model):
     imgTG=cv2.cvtColor(imgT,cv2.COLOR_BGR2GRAY)
     
     resp=predict(model,imgTG)
-    img=cv2.imread('TrainData/'+chr(int(resp[0])+65)+'_2.jpg')
-    return img,chr(int(resp[0])+65)
+    # img=cv2.imread('TrainData/'+chr(int(resp[0])+65)+'_2.jpg')
+    return chr(int(resp[0])+65)
     #cv2.imshow('imgTG',imgTG)
 def onChange(val): #callback when the user change the detection threshold
         value = val
@@ -339,7 +339,7 @@ while(cap.isOpened() and ans1==True):
 	
 	
 	_, img=cap.read()
-	#img=cv2.flip (img,1)
+	img=cv2.flip (img,1)
 	cv2.rectangle(img,(350,128),(600,400),(255,0,0),3) # bounding box which captures ASL sign to be detected by the system
 	img1=img[128:400,350:600]
 	img_ycrcb = cv2.cvtColor(img1, cv2.COLOR_BGR2YCR_CB)
@@ -378,7 +378,7 @@ while(cap.isOpened() and ans1==True):
 			cv2.circle(img1, center, 5, (0, 0, 255), -1)
 			pts.appendleft(extTop)
 			pts1.appendleft(center)
-		gesture,label=getGestureImg(cnt,img1,mask,model)   # passing the trained model for prediction and fetching the result
+		label=getGestureImg(cnt,img1,mask,model)   # passing the trained model for prediction and fetching the result
 		
 		if(label!=None and switch2 == False):
 			if(temp==0):
@@ -395,7 +395,7 @@ while(cap.isOpened() and ans1==True):
 				print (text)
 		
 		
-		cv2.imshow('Predict',gesture)
+# 		cv2.imshow('Predict',gesture)
 	if label != "J" and label != "Z":
 		cv2.putText(img,label,(50,150), font,6,(0,125,155),2)  # displaying the predicted letter on the main screen
 	cv2.putText(img,text,(50,450), font,1,(0,0,255),2)
